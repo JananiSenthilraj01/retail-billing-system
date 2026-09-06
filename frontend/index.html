@@ -1,0 +1,3301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RetailNova | AI Retail Intelligence</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f172a, #1d4ed8, #2563eb);
+            color: white;
+            padding: 28px 40px;
+            box-shadow: 0 4px 20px rgba(15,23,42,0.15);
+        }
+
+        header h1 {
+            font-size: 32px;
+        }
+
+        header p {
+            margin-top: 7px;
+            color: #dbeafe;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* KPI */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .card {
+            background: white;
+            padding: 23px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.08);
+            transition: transform 0.25s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card h3 {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .blue {
+            border-top: 4px solid #2563eb;
+        }
+
+        .green {
+            border-top: 4px solid #16a34a;
+        }
+
+        .orange {
+            border-top: 4px solid #f97316;
+        }
+
+        .purple {
+            border-top: 4px solid #7c3aed;
+        }
+
+        /* AI COMMAND CENTER */
+
+        .command-center {
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #172554,
+                    #1e3a8a
+                );
+
+            color: white;
+            padding: 30px;
+            border-radius: 18px;
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 10px 30px rgba(15,23,42,0.22);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .command-center::after {
+            content: "✦";
+            position: absolute;
+            right: 40px;
+            top: 20px;
+            font-size: 80px;
+            opacity: 0.08;
+        }
+
+        .command-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .command-subtitle {
+            color: #bfdbfe;
+            margin-bottom: 24px;
+        }
+
+        .command-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .command-stat {
+            background: rgba(255,255,255,0.09);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 18px;
+            border-radius: 12px;
+        }
+
+        .command-stat span {
+            display: block;
+            color: #bfdbfe;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .command-stat strong {
+            font-size: 23px;
+        }
+
+        .recommendation {
+            background: rgba(255,255,255,0.10);
+            border-left: 4px solid #60a5fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+        }
+
+        .recommendation h3 {
+            margin-bottom: 8px;
+        }
+
+        .recommendation p {
+            color: #dbeafe;
+            line-height: 1.5;
+        }
+
+        .action-button {
+            background: white;
+            color: #1d4ed8;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        #actionPlan {
+            display: none;
+            margin-top: 18px;
+            background: white;
+            color: #1e293b;
+            padding: 22px;
+            border-radius: 12px;
+            line-height: 1.7;
+        }
+
+        #actionPlan h3 {
+            color: #1d4ed8;
+            margin-bottom: 10px;
+        }
+
+        .action-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .priority {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        .priority-normal {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .priority-high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* HEALTH */
+
+        .health {
+            background: white;
+            border-radius: 15px;
+            padding: 24px;
+            margin-bottom: 22px;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.08);
+        }
+
+        .health-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .health-score {
+            font-size: 34px;
+            font-weight: bold;
+            color: #16a34a;
+        }
+
+        .progress {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 82%;
+            background: #16a34a;
+            border-radius: 20px;
+            transition: width 0.5s;
+        }
+
+        /* INSIGHTS */
+
+        .insights {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .insight {
+            background: white;
+            padding: 22px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.08);
+        }
+
+        .insight h3 {
+            margin-bottom: 10px;
+        }
+
+        .insight p {
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        /* ALERT */
+
+        .alert {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 22px;
+        }
+
+        .alert strong {
+            color: #c2410c;
+        }
+
+        /* QUICK INSIGHTS */
+
+        .quick-insights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .quick-card {
+            background: white;
+            padding: 24px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.08);
+            border-left: 5px solid #2563eb;
+        }
+
+        .quick-card h3 {
+            margin-bottom: 12px;
+            color: #1e293b;
+        }
+
+        .quick-card p {
+            color: #64748b;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .quick-card.low {
+            border-left-color: #f97316;
+        }
+
+        .quick-card.best {
+            border-left-color: #7c3aed;
+        }
+
+        .healthy-text {
+            color: #16a34a !important;
+            font-weight: bold;
+        }
+
+        .warning-text {
+            color: #dc2626 !important;
+            font-weight: bold;
+        }
+
+        .best-text {
+            color: #7c3aed !important;
+            font-weight: bold;
+        }
+
+        /* CHARTS */
+
+        .charts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.08);
+        }
+
+        .chart-card h2 {
+            margin-bottom: 20px;
+        }
+
+        .bar-chart {
+            height: 240px;
+            display: flex;
+            align-items: end;
+            gap: 18px;
+            padding: 20px 10px 10px;
+            border-bottom: 2px solid #cbd5e1;
+        }
+
+        .bar {
+            flex: 1;
+            background: linear-gradient(to top, #2563eb, #60a5fa);
+            border-radius: 7px 7px 0 0;
+            min-height: 20px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .bar:hover {
+            transform: translateY(-6px);
+        }
+
+        .bar span {
+            position: absolute;
+            top: -25px;
+            width: 100%;
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .bar-labels {
+            display: flex;
+            gap: 18px;
+            padding: 10px;
+        }
+
+        .bar-labels div {
+            flex: 1;
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* INVENTORY */
+
+        .inventory-row {
+            margin-bottom: 22px;
+        }
+
+        .inventory-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .inventory-track {
+            height: 16px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .inventory-fill {
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.5s;
+        }
+
+        /* SECTIONS */
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 22px;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.08);
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+        }
+
+        /* TABLE */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f8fafc;
+        }
+
+        .low-stock {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .normal-stock {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        /* BILLING */
+
+        .billing-section {
+            background: linear-gradient(
+                135deg,
+                #ffffff,
+                #eff6ff
+            );
+
+            padding: 28px;
+            border-radius: 15px;
+            margin-bottom: 22px;
+            box-shadow: 0 5px 18px rgba(15,23,42,0.08);
+            border: 1px solid #dbeafe;
+        }
+
+        .billing-section h2 {
+            margin-bottom: 8px;
+        }
+
+        .billing-subtitle {
+            color: #64748b;
+            margin-bottom: 22px;
+        }
+
+        .billing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            font-size: 14px;
+            color: #475569;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            background: white;
+            font-size: 15px;
+        }
+
+        .price-box {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #dbeafe;
+        }
+
+        .price-box span {
+            color: #64748b;
+        }
+
+        .price-box strong {
+            display: block;
+            font-size: 24px;
+            margin-top: 5px;
+        }
+
+        .bill-total {
+            margin-top: 22px;
+            padding: 20px;
+            background: #0f172a;
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bill-total strong {
+            font-size: 28px;
+        }
+
+        .create-bill-btn {
+            margin-top: 18px;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 9px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .create-bill-btn:hover {
+            background: #1d4ed8;
+        }
+
+        #billMessage {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .success-message {
+            display: block !important;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error-message {
+            display: block !important;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* COPILOT */
+
+        .copilot {
+            display: flex;
+            gap: 10px;
+        }
+
+        .copilot input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            font-size: 16px;
+        }
+
+        .copilot button {
+            padding: 15px 24px;
+            border: none;
+            border-radius: 9px;
+            background: #7c3aed;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .copilot button:hover {
+            background: #6d28d9;
+        }
+
+        #answer {
+            margin-top: 18px;
+            padding: 18px;
+            background: #f8fafc;
+            border-radius: 9px;
+            min-height: 60px;
+            white-space: pre-wrap;
+        }
+
+        /* BUDDY */
+
+        .buddy {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            width: 170px;
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 10px 35px rgba(15,23,42,0.20);
+            z-index: 1000;
+            animation: floatBuddy 3s ease-in-out infinite;
+        }
+
+        .buddy-face {
+            font-size: 58px;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .buddy-name {
+            font-weight: bold;
+            color: #1d4ed8;
+            font-size: 15px;
+        }
+
+        .buddy-message {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+
+        @keyframes floatBuddy {
+
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+
+        }
+
+        .celebrate {
+            animation: celebrate 0.6s ease-in-out 4;
+        }
+
+        @keyframes celebrate {
+
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            25% {
+                transform: rotate(-10deg) scale(1.1);
+            }
+
+            50% {
+                transform: rotate(10deg) scale(1.15);
+            }
+
+            75% {
+                transform: rotate(-10deg) scale(1.1);
+            }
+
+            100% {
+                transform: rotate(0deg) scale(1);
+            }
+
+        }
+
+        /* CONFETTI */
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -20px;
+            z-index: 2000;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .charts,
+            .insights,
+            .billing-grid,
+            .quick-insights {
+                grid-template-columns: 1fr;
+            }
+
+            .command-stats {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .copilot {
+                flex-direction: column;
+            }
+
+            .health-top,
+            .bill-total {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .buddy {
+                right: 10px;
+                bottom: 10px;
+                width: 145px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>🚀 RetailNova</h1>
+
+    <p>
+        AI Sales & Inventory Copilot
+        — Retail Intelligence Command Center
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- KPI CARDS -->
+
+    <div class="cards">
+
+        <div class="card blue">
+
+            <h3>🏪 Total Stores</h3>
+
+            <p id="storeCount">0</p>
+
+        </div>
+
+
+        <div class="card green">
+
+            <h3>📦 Total Products</h3>
+
+            <p id="productCount">0</p>
+
+        </div>
+
+
+        <div class="card orange">
+
+            <h3>🧾 Total Bills</h3>
+
+            <p id="billCount">0</p>
+
+        </div>
+
+
+        <div class="card purple">
+
+            <h3>💰 Total Sales</h3>
+
+            <p id="salesTotal">₹0</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- AI COMMAND CENTER -->
+
+    <div class="command-center">
+
+        <div class="command-title">
+
+            🧠 RetailNova AI Command Center
+
+        </div>
+
+
+        <p class="command-subtitle">
+
+            Your intelligent business control room
+
+        </p>
+
+
+        <div class="command-stats">
+
+            <div class="command-stat">
+
+                <span>💰 Today's Sales</span>
+
+                <strong id="commandSales">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <div class="command-stat">
+
+                <span>📦 Inventory</span>
+
+                <strong id="commandInventory">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div class="command-stat">
+
+                <span>🧾 Orders</span>
+
+                <strong id="commandBills">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="recommendation">
+
+            <h3>
+                ✨ AI Recommendation
+            </h3>
+
+
+            <p id="aiRecommendation">
+
+                Analyzing your business data...
+
+            </p>
+
+        </div>
+
+
+        <button
+            class="action-button"
+            onclick="generateActionPlan()">
+
+            ✨ GENERATE ACTION PLAN
+
+        </button>
+
+
+        <div id="actionPlan">
+
+            <h3>
+                🎯 Today's Retail Action Plan
+            </h3>
+
+            <div id="actionPlanContent"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUSINESS HEALTH -->
+
+    <div class="health">
+
+        <div class="health-top">
+
+            <div>
+
+                <h2>💚 Business Health</h2>
+
+                <p style="color:#64748b; margin-top:6px;">
+
+                    Real-time retail performance indicator
+
+                </p>
+
+            </div>
+
+
+            <div
+                class="health-score"
+                id="healthScore">
+
+                82/100
+
+            </div>
+
+        </div>
+
+
+        <div class="progress">
+
+            <div
+                class="progress-bar"
+                id="healthBar">
+            </div>
+
+        </div>
+
+
+        <p
+            id="healthMessage"
+            style="margin-top:10px; color:#16a34a;">
+
+            ● Healthy — business operations are active
+
+        </p>
+
+    </div>
+
+
+    <!-- INSIGHTS -->
+
+    <div class="insights">
+
+        <div class="insight">
+
+            <h3>📈 Sales Insight</h3>
+
+            <p id="salesInsight">
+
+                Sales data is being analyzed...
+
+            </p>
+
+        </div>
+
+
+        <div class="insight">
+
+            <h3>📦 Inventory Insight</h3>
+
+            <p id="inventoryInsight">
+
+                Inventory data is being analyzed...
+
+            </p>
+
+        </div>
+
+
+        <div class="insight">
+
+            <h3>🎯 Manager Action</h3>
+
+            <p id="managerAction">
+
+                Continue monitoring sales and stock.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- SMART ALERT -->
+
+    <div
+        class="alert"
+        id="smartAlert">
+
+        <strong>⚡ Smart Alert:</strong>
+
+        RetailNova continuously monitors
+        sales and inventory.
+
+    </div>
+
+
+    <!-- NEW QUICK INSIGHTS -->
+
+    <div class="quick-insights">
+
+        <div class="quick-card low">
+
+            <h3>⚠️ Low-Stock Monitor</h3>
+
+            <p id="lowStockMessage">
+
+                Checking inventory...
+
+            </p>
+
+        </div>
+
+
+        <div class="quick-card best">
+
+            <h3>🏆 Best-Selling Product</h3>
+
+            <p id="bestSellerMessage">
+
+                Analyzing sales...
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- CHARTS -->
+
+    <div class="charts">
+
+        <div class="chart-card">
+
+            <h2>📈 Sales Overview</h2>
+
+            <div
+                class="bar-chart"
+                id="salesChart">
+            </div>
+
+            <div
+                class="bar-labels"
+                id="salesLabels">
+            </div>
+
+        </div>
+
+
+        <div class="chart-card">
+
+            <h2>📦 Inventory Levels</h2>
+
+            <div
+                id="inventoryChart">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SMART BILLING -->
+
+    <div class="billing-section">
+
+        <h2>🧾 Smart Billing</h2>
+
+        <p class="billing-subtitle">
+
+            Create a customer bill and
+            automatically update inventory.
+
+        </p>
+
+
+        <div class="billing-grid">
+
+            <div class="form-group">
+
+                <label>
+                    Customer Name
+                </label>
+
+                <input
+                    id="customerName"
+                    type="text"
+                    placeholder="Enter customer name">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Product
+                </label>
+
+                <select id="productSelect">
+
+                    <option value="">
+                        Select product
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Quantity
+                </label>
+
+                <input
+                    id="quantity"
+                    type="number"
+                    min="1"
+                    value="1"
+                    oninput="calculateTotal()">
+
+            </div>
+
+
+            <div class="price-box">
+
+                <span>
+                    Product Price
+                </span>
+
+                <strong id="productPrice">
+                    ₹0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="bill-total">
+
+            <div>
+                Total Bill
+            </div>
+
+            <strong id="billTotal">
+                ₹0
+            </strong>
+
+        </div>
+
+
+        <button
+            class="create-bill-btn"
+            onclick="createBill()">
+
+            🧾 CREATE BILL
+
+        </button>
+
+
+        <div id="billMessage"></div>
+
+    </div>
+
+
+    <!-- STORE NETWORK -->
+
+    <div class="section">
+
+        <h2>🏪 Store Network</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Store</th>
+                    <th>Location</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="storeTable"></tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- INVENTORY -->
+
+    <div class="section">
+
+        <h2>📦 Product Inventory</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="productTable"></tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- SALES -->
+
+    <div class="section">
+
+        <h2>🧾 Recent Sales</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Bill ID</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Date</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="salesTable"></tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- COPILOT -->
+
+    <div class="section">
+
+        <h2>🤖 AI Sales & Inventory Copilot</h2>
+
+        <p
+            style="color:#64748b; margin-bottom:18px;">
+
+            Ask natural-language questions
+            about your retail business.
+
+        </p>
+
+
+        <div class="copilot">
+
+            <input
+                id="question"
+                type="text"
+                placeholder="Example: Which products are low in stock?">
+
+            <button onclick="askCopilot()">
+
+                🤖 Ask Copilot
+
+            </button>
+
+        </div>
+
+
+        <div id="answer">
+
+            Ask a question to analyze your
+            retail data.
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- RETAILNOVA BUDDY -->
+
+<div
+    class="buddy"
+    id="buddy">
+
+    <div
+        class="buddy-face"
+        id="buddyFace">
+
+        😊
+
+    </div>
+
+    <div class="buddy-name">
+
+        RetailNova Buddy
+
+    </div>
+
+    <div
+        class="buddy-message"
+        id="buddyMessage">
+
+        Ready to help your business! 🚀
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+const API =
+    "http://127.0.0.1:8000";
+
+
+let productsData = [];
+
+let currentSales = [];
+
+let currentDashboard = {};
+
+
+// ======================================
+// DASHBOARD
+// ======================================
+
+async function loadDashboard() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/dashboard?_=${Date.now()}`,
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Dashboard returned ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        currentDashboard =
+            data;
+
+
+        document.getElementById(
+            "storeCount"
+        ).textContent =
+            data.stores;
+
+
+        document.getElementById(
+            "productCount"
+        ).textContent =
+            data.products;
+
+
+        document.getElementById(
+            "billCount"
+        ).textContent =
+            data.bills;
+
+
+        document.getElementById(
+            "salesTotal"
+        ).textContent =
+            "₹" + data.total_sales;
+
+
+        document.getElementById(
+            "commandSales"
+        ).textContent =
+            "₹" + data.total_sales;
+
+
+        document.getElementById(
+            "commandBills"
+        ).textContent =
+            data.bills;
+
+
+        document.getElementById(
+            "salesInsight"
+        ).textContent =
+            `${data.bills} bill(s) generated with total sales of ₹${data.total_sales}.`;
+
+
+        updateBuddy(
+            data.bills,
+            data.total_sales
+        );
+
+
+        updateHealth(
+            data.bills,
+            data.total_sales
+        );
+
+
+        updateCommandCenter();
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Dashboard error:",
+            error
+        );
+
+    }
+
+}
+
+
+// ======================================
+// COMMAND CENTER
+// ======================================
+
+function updateCommandCenter() {
+
+    if (
+        !currentDashboard ||
+        productsData.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    const lowStock =
+        productsData.filter(
+            product =>
+                product.stock <= 10
+        );
+
+
+    let recommendation;
+
+
+    if (lowStock.length > 0) {
+
+        recommendation =
+            `⚠️ ${lowStock.length} product(s) need attention. ` +
+            `Check ${lowStock[0].name} and consider replenishing inventory.`;
+
+    }
+
+    else if (
+        currentDashboard.bills >= 5
+    ) {
+
+        recommendation =
+            `🚀 Sales activity is strong with ` +
+            `${currentDashboard.bills} completed orders. ` +
+            `Maintain healthy inventory levels.`;
+
+    }
+
+    else if (
+        currentDashboard.total_sales >= 100
+    ) {
+
+        recommendation =
+            `📈 Business is active with ₹${currentDashboard.total_sales} ` +
+            `in sales. Continue monitoring customer demand.`;
+
+    }
+
+    else {
+
+        recommendation =
+            `💡 Continue building sales activity while monitoring ` +
+            `inventory and customer demand.`;
+
+    }
+
+
+    document.getElementById(
+        "aiRecommendation"
+    ).textContent =
+        recommendation;
+
+
+    const healthyProducts =
+        productsData.filter(
+            product =>
+                product.stock > 10
+        ).length;
+
+
+    document.getElementById(
+        "commandInventory"
+    ).textContent =
+        `${healthyProducts}/${productsData.length} Healthy`;
+
+}
+
+
+// ======================================
+// GENERATE ACTION PLAN
+// ======================================
+
+function generateActionPlan() {
+
+    const plan =
+        document.getElementById(
+            "actionPlan"
+        );
+
+
+    const content =
+        document.getElementById(
+            "actionPlanContent"
+        );
+
+
+    const lowStock =
+        productsData.filter(
+            product =>
+                product.stock <= 10
+        );
+
+
+    let priority =
+        lowStock.length > 0
+            ? "HIGH"
+            : "NORMAL";
+
+
+    let priorityClass =
+        lowStock.length > 0
+            ? "priority-high"
+            : "priority-normal";
+
+
+    let html = "";
+
+
+    html += `
+        <div class="action-item">
+
+            📊 <strong>Business status:</strong>
+
+            ${
+                currentDashboard.bills > 0
+                    ? "Sales activity detected."
+                    : "No sales recorded yet."
+            }
+
+        </div>
+    `;
+
+
+    if (lowStock.length > 0) {
+
+        lowStock.forEach(
+            product => {
+
+                html += `
+                    <div class="action-item">
+
+                        📦 <strong>Restock:</strong>
+
+                        ${product.name}
+
+                        — only ${product.stock}
+                        unit(s) remaining.
+
+                    </div>
+                `;
+
+            }
+        );
+
+    }
+
+    else {
+
+        html += `
+            <div class="action-item">
+
+                🟢 <strong>Inventory:</strong>
+
+                Current inventory levels are healthy.
+
+            </div>
+        `;
+
+    }
+
+
+    if (
+        currentDashboard.total_sales >= 100
+    ) {
+
+        html += `
+            <div class="action-item">
+
+                📈 <strong>Sales:</strong>
+
+                Maintain sufficient inventory
+                to support customer demand.
+
+            </div>
+        `;
+
+    }
+
+    else {
+
+        html += `
+            <div class="action-item">
+
+                🎯 <strong>Sales:</strong>
+
+                Focus on increasing customer
+                orders and monitoring demand.
+
+            </div>
+        `;
+
+    }
+
+
+    html += `
+        <div class="action-item">
+
+            🤖 <strong>AI Priority:</strong>
+
+            <span class="priority ${priorityClass}">
+
+                ${priority}
+
+            </span>
+
+        </div>
+    `;
+
+
+    content.innerHTML =
+        html;
+
+
+    plan.style.display =
+        "block";
+
+}
+
+
+// ======================================
+// BUSINESS HEALTH
+// ======================================
+
+function updateHealth(
+    bills,
+    sales
+) {
+
+    let score = 70;
+
+
+    if (bills >= 1) {
+        score += 5;
+    }
+
+
+    if (sales >= 100) {
+        score += 7;
+    }
+
+
+    if (sales >= 500) {
+        score += 8;
+    }
+
+
+    score =
+        Math.min(score, 100);
+
+
+    document.getElementById(
+        "healthScore"
+    ).textContent =
+        score + "/100";
+
+
+    document.getElementById(
+        "healthBar"
+    ).style.width =
+        score + "%";
+
+
+    if (score >= 85) {
+
+        document.getElementById(
+            "healthMessage"
+        ).textContent =
+            "● Excellent — business is performing strongly";
+
+    }
+
+    else {
+
+        document.getElementById(
+            "healthMessage"
+        ).textContent =
+            "● Healthy — business operations are active";
+
+    }
+
+}
+
+
+// ======================================
+// BUDDY
+// ======================================
+
+function updateBuddy(
+    bills,
+    sales
+) {
+
+    const face =
+        document.getElementById(
+            "buddyFace"
+        );
+
+
+    const message =
+        document.getElementById(
+            "buddyMessage"
+        );
+
+
+    if (bills >= 10) {
+
+        face.textContent =
+            "🥳";
+
+        message.textContent =
+            "WOW! Orders are booming! 🚀";
+
+    }
+
+    else if (bills >= 5) {
+
+        face.textContent =
+            "😎";
+
+        message.textContent =
+            "Amazing! Sales are growing! 📈";
+
+    }
+
+    else if (bills >= 2) {
+
+        face.textContent =
+            "😊";
+
+        message.textContent =
+            "Great! Customers are buying! 🛍️";
+
+    }
+
+    else if (sales >= 100) {
+
+        face.textContent =
+            "🤩";
+
+        message.textContent =
+            "Nice sales! Let's grow even more! 💰";
+
+    }
+
+    else {
+
+        face.textContent =
+            "🙂";
+
+        message.textContent =
+            "Ready to help your business! 🚀";
+
+    }
+
+}
+
+
+// ======================================
+// CELEBRATION
+// ======================================
+
+function celebrateBuddy() {
+
+    const buddy =
+        document.getElementById(
+            "buddy"
+        );
+
+
+    document.getElementById(
+        "buddyFace"
+    ).textContent =
+        "🥳";
+
+
+    document.getElementById(
+        "buddyMessage"
+    ).textContent =
+        "SALE COMPLETED! 🎉";
+
+
+    buddy.classList.add(
+        "celebrate"
+    );
+
+
+    setTimeout(
+        () => {
+
+            buddy.classList.remove(
+                "celebrate"
+            );
+
+        },
+        2500
+    );
+
+
+    createConfetti();
+
+}
+
+
+// ======================================
+// CONFETTI
+// ======================================
+
+function createConfetti() {
+
+    const symbols = [
+        "🎉",
+        "✨",
+        "🎊",
+        "⭐",
+        "💰",
+        "🛍️"
+    ];
+
+
+    for (
+        let i = 0;
+        i < 45;
+        i++
+    ) {
+
+        const confetti =
+            document.createElement(
+                "div"
+            );
+
+
+        confetti.className =
+            "confetti";
+
+
+        confetti.textContent =
+            symbols[
+                Math.floor(
+                    Math.random() *
+                    symbols.length
+                )
+            ];
+
+
+        confetti.style.left =
+            Math.random() * 100 +
+            "vw";
+
+
+        confetti.style.animationDuration =
+            (2 + Math.random() * 3) +
+            "s";
+
+
+        document.body.appendChild(
+            confetti
+        );
+
+
+        setTimeout(
+            () => {
+
+                confetti.remove();
+
+            },
+            5500
+        );
+
+    }
+
+}
+
+
+// ======================================
+// STORES
+// ======================================
+
+async function loadStores() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/stores?_=${Date.now()}`,
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        const stores =
+            await response.json();
+
+
+        const table =
+            document.getElementById(
+                "storeTable"
+            );
+
+
+        table.innerHTML =
+            "";
+
+
+        stores.forEach(
+            store => {
+
+                table.innerHTML += `
+                    <tr>
+
+                        <td>
+                            ${store.name}
+                        </td>
+
+                        <td>
+                            ${store.location}
+                        </td>
+
+                    </tr>
+                `;
+
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Stores error:",
+            error
+        );
+
+    }
+
+}
+
+
+// ======================================
+// PRODUCTS
+// ======================================
+
+async function loadProducts() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/products?_=${Date.now()}`,
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Products returned ${response.status}`
+            );
+
+        }
+
+
+        productsData =
+            await response.json();
+
+
+        const table =
+            document.getElementById(
+                "productTable"
+            );
+
+
+        table.innerHTML =
+            "";
+
+
+        const select =
+            document.getElementById(
+                "productSelect"
+            );
+
+
+        select.innerHTML = `
+            <option value="">
+                Select product
+            </option>
+        `;
+
+
+        productsData.forEach(
+            product => {
+
+                const status =
+                    product.stock <= 10
+
+                        ? `
+                            <span class="low-stock">
+                                ⚠ Low Stock
+                            </span>
+                          `
+
+                        : `
+                            <span class="normal-stock">
+                                ✓ In Stock
+                            </span>
+                          `;
+
+
+                table.innerHTML += `
+                    <tr>
+
+                        <td>
+                            ${product.name}
+                        </td>
+
+                        <td>
+                            ₹${product.price}
+                        </td>
+
+                        <td>
+                            ${product.stock}
+                        </td>
+
+                        <td>
+                            ${status}
+                        </td>
+
+                    </tr>
+                `;
+
+
+                select.innerHTML += `
+                    <option value="${product.id}">
+
+                        ${product.name}
+                        — ₹${product.price}
+                        — Stock: ${product.stock}
+
+                    </option>
+                `;
+
+            }
+        );
+
+
+        createInventoryChart(
+            productsData
+        );
+
+
+        updateInventoryInsight(
+            productsData
+        );
+
+
+        updateQuickInsights();
+
+
+        updateCommandCenter();
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Products error:",
+            error
+        );
+
+    }
+
+}
+
+
+// ======================================
+// QUICK RETAIL INSIGHTS
+// ======================================
+
+async function updateQuickInsights() {
+
+    const lowStockMessage =
+        document.getElementById(
+            "lowStockMessage"
+        );
+
+    const bestSellerMessage =
+        document.getElementById(
+            "bestSellerMessage"
+        );
+
+
+    // ======================================
+    // LOW STOCK
+    // ======================================
+
+    const lowStock =
+        productsData.filter(
+            product =>
+                Number(product.stock) <= 10
+        );
+
+
+    if (lowStock.length === 0) {
+
+        lowStockMessage.innerHTML =
+            `<span class="healthy-text">
+                ✅ All products have healthy stock levels.
+            </span>`;
+
+    }
+
+    else {
+
+        lowStockMessage.innerHTML =
+            lowStock
+                .map(
+                    product =>
+                        `<span class="warning-text">
+                            ⚠️ ${product.name}: ${product.stock} units remaining.
+                        </span>`
+                )
+                .join("<br>");
+
+    }
+
+
+    // ======================================
+    // BEST SELLING PRODUCT
+    // ======================================
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/sales?_=${Date.now()}`,
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Sales request failed"
+            );
+
+        }
+
+
+        const sales =
+            await response.json();
+
+
+        if (!sales || sales.length === 0) {
+
+            bestSellerMessage.textContent =
+                "No sales data available yet.";
+
+            return;
+
+        }
+
+
+        /*
+         IMPORTANT:
+
+         Your /sales endpoint currently
+         returns bills.
+
+         Therefore we calculate the best
+         seller when product information is
+         available in the returned data.
+        */
+
+
+        const productSales = {};
+
+
+        sales.forEach(
+            sale => {
+
+                const productName =
+                    sale.product_name ||
+                    sale.product ||
+                    sale.name;
+
+
+                const quantity =
+                    Number(
+                        sale.quantity || 0
+                    );
+
+
+                if (
+                    productName &&
+                    quantity > 0
+                ) {
+
+                    productSales[productName] =
+                        (
+                            productSales[productName] ||
+                            0
+                        ) +
+                        quantity;
+
+                }
+
+            }
+        );
+
+
+        const names =
+            Object.keys(
+                productSales
+            );
+
+
+        if (names.length > 0) {
+
+            const bestSeller =
+                names.reduce(
+                    (
+                        best,
+                        current
+                    ) =>
+                        productSales[current] >
+                        productSales[best]
+                            ? current
+                            : best
+                );
+
+
+            bestSellerMessage.innerHTML =
+                `<span class="best-text">
+                    🏆 ${bestSeller}
+                    <br>
+                    ${productSales[bestSeller]} unit(s) sold
+                </span>`;
+
+        }
+
+        else {
+
+            /*
+             Fallback for the current
+             single-product demo database.
+            */
+
+            if (
+                productsData.length === 1 &&
+                currentDashboard.bills > 0
+            ) {
+
+                bestSellerMessage.innerHTML =
+                    `<span class="best-text">
+                        🏆 ${productsData[0].name}
+                        <br>
+                        Active selling product
+                    </span>`;
+
+            }
+
+            else {
+
+                bestSellerMessage.textContent =
+                    "Sales recorded, but product-level sales data is unavailable.";
+
+            }
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Best seller error:",
+            error
+        );
+
+
+        bestSellerMessage.textContent =
+            "Unable to analyze sales data.";
+
+    }
+
+}
+
+
+// ======================================
+// PRODUCT SELECT
+// ======================================
+
+document
+    .getElementById("productSelect")
+    .addEventListener(
+        "change",
+        calculateTotal
+    );
+
+
+// ======================================
+// CALCULATE BILL
+// ======================================
+
+function calculateTotal() {
+
+    const productId =
+        Number(
+            document.getElementById(
+                "productSelect"
+            ).value
+        );
+
+
+    const quantity =
+        Number(
+            document.getElementById(
+                "quantity"
+            ).value
+        ) || 0;
+
+
+    const product =
+        productsData.find(
+            p => p.id === productId
+        );
+
+
+    if (!product) {
+
+        document.getElementById(
+            "productPrice"
+        ).textContent =
+            "₹0";
+
+
+        document.getElementById(
+            "billTotal"
+        ).textContent =
+            "₹0";
+
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "productPrice"
+    ).textContent =
+        "₹" + product.price;
+
+
+    document.getElementById(
+        "billTotal"
+    ).textContent =
+        "₹" +
+        (
+            product.price *
+            quantity
+        );
+
+}
+
+
+// ======================================
+// CREATE BILL
+// ======================================
+
+async function createBill() {
+
+    const customerName =
+        document.getElementById(
+            "customerName"
+        ).value.trim();
+
+
+    const productId =
+        Number(
+            document.getElementById(
+                "productSelect"
+            ).value
+        );
+
+
+    const quantity =
+        Number(
+            document.getElementById(
+                "quantity"
+            ).value
+        );
+
+
+    const message =
+        document.getElementById(
+            "billMessage"
+        );
+
+
+    message.className = "";
+
+    message.style.display =
+        "none";
+
+
+    if (!customerName) {
+
+        message.textContent =
+            "⚠ Please enter customer name.";
+
+        message.className =
+            "error-message";
+
+        return;
+
+    }
+
+
+    if (!productId) {
+
+        message.textContent =
+            "⚠ Please select a product.";
+
+        message.className =
+            "error-message";
+
+        return;
+
+    }
+
+
+    if (!quantity || quantity < 1) {
+
+        message.textContent =
+            "⚠ Quantity must be at least 1.";
+
+        message.className =
+            "error-message";
+
+        return;
+
+    }
+
+
+    const product =
+        productsData.find(
+            p => p.id === productId
+        );
+
+
+    if (!product) {
+
+        message.textContent =
+            "⚠ Product not found.";
+
+        message.className =
+            "error-message";
+
+        return;
+
+    }
+
+
+    if (quantity > product.stock) {
+
+        message.textContent =
+            `⚠ Only ${product.stock} units available.`;
+
+        message.className =
+            "error-message";
+
+        return;
+
+    }
+
+
+    try {
+
+        message.textContent =
+            "Creating bill...";
+
+
+        message.className =
+            "success-message";
+
+
+        const response =
+            await fetch(
+                `${API}/bills`,
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        customer_name:
+                            customerName,
+
+                        items: [
+
+                            {
+
+                                product_id:
+                                    productId,
+
+                                quantity:
+                                    quantity
+
+                            }
+
+                        ]
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok || data.error) {
+
+            message.textContent =
+                "❌ " +
+                (
+                    data.error ||
+                    "Could not create bill."
+                );
+
+
+            message.className =
+                "error-message";
+
+
+            return;
+
+        }
+
+
+        message.textContent =
+            `🎉 Bill #${data.bill_id} created successfully! Total: ₹${data.total_amount}`;
+
+
+        message.className =
+            "success-message";
+
+
+        celebrateBuddy();
+
+
+        document.getElementById(
+            "customerName"
+        ).value =
+            "";
+
+
+        document.getElementById(
+            "productSelect"
+        ).value =
+            "";
+
+
+        document.getElementById(
+            "quantity"
+        ).value =
+            "1";
+
+
+        document.getElementById(
+            "productPrice"
+        ).textContent =
+            "₹0";
+
+
+        document.getElementById(
+            "billTotal"
+        ).textContent =
+            "₹0";
+
+
+        // ======================================
+        // REFRESH EVERYTHING
+        // ======================================
+
+        await loadDashboard();
+
+        await loadProducts();
+
+        await loadSales();
+
+        await updateQuickInsights();
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Billing error:",
+            error
+        );
+
+
+        message.textContent =
+            "❌ Could not connect to the backend.";
+
+
+        message.className =
+            "error-message";
+
+    }
+
+}
+
+
+// ======================================
+// INVENTORY CHART
+// ======================================
+
+function createInventoryChart(
+    products
+) {
+
+    const chart =
+        document.getElementById(
+            "inventoryChart"
+        );
+
+
+    chart.innerHTML =
+        "";
+
+
+    if (products.length === 0) {
+
+        chart.innerHTML =
+            "<p>No inventory data available.</p>";
+
+        return;
+
+    }
+
+
+    const maxStock =
+        Math.max(
+            ...products.map(
+                p => p.stock
+            ),
+            1
+        );
+
+
+    products.forEach(
+        product => {
+
+            const percentage =
+                Math.min(
+                    (
+                        product.stock /
+                        maxStock
+                    ) * 100,
+                    100
+                );
+
+
+            const fillColor =
+                product.stock <= 10
+                    ? "#dc2626"
+                    : "#16a34a";
+
+
+            chart.innerHTML += `
+                <div class="inventory-row">
+
+                    <div class="inventory-title">
+
+                        <strong>
+                            ${product.name}
+                        </strong>
+
+                        <span
+                            class="${
+                                product.stock <= 10
+                                    ? "low-stock"
+                                    : "normal-stock"
+                            }">
+
+                            ${product.stock} units
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="inventory-track">
+
+                        <div
+                            class="inventory-fill"
+                            style="
+                                width:${percentage}%;
+                                background:${fillColor};
+                            ">
+
+                        </div>
+
+                    </div>
+
+                </div>
+            `;
+
+        }
+    );
+
+}
+
+
+// ======================================
+// INVENTORY INSIGHT
+// ======================================
+
+function updateInventoryInsight(
+    products
+) {
+
+    if (products.length === 0) {
+
+        return;
+
+    }
+
+
+    const lowStock =
+        products.filter(
+            product =>
+                product.stock <= 10
+        );
+
+
+    if (lowStock.length > 0) {
+
+        document.getElementById(
+            "inventoryInsight"
+        ).textContent =
+            `${lowStock.length} product(s) need attention because stock is low.`;
+
+
+        document.getElementById(
+            "managerAction"
+        ).textContent =
+            "Review low-stock products and consider replenishment.";
+
+
+        document.getElementById(
+            "smartAlert"
+        ).innerHTML =
+            `<strong>⚠ Inventory Alert:</strong>
+             ${lowStock.length} product(s) have low stock.
+             Consider replenishment.`;
+
+    }
+
+    else {
+
+        document.getElementById(
+            "inventoryInsight"
+        ).textContent =
+            "All current products have healthy stock levels.";
+
+
+        document.getElementById(
+            "managerAction"
+        ).textContent =
+            "Continue monitoring inventory and sales.";
+
+
+        document.getElementById(
+            "smartAlert"
+        ).innerHTML =
+            `<strong>⚡ Smart Alert:</strong>
+             Inventory levels are currently healthy.`;
+
+    }
+
+}
+
+
+// ======================================
+// SALES
+// ======================================
+
+async function loadSales() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/sales?_=${Date.now()}`,
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Sales returned ${response.status}`
+            );
+
+        }
+
+
+        const sales =
+            await response.json();
+
+
+        currentSales =
+            sales;
+
+
+        const table =
+            document.getElementById(
+                "salesTable"
+            );
+
+
+        table.innerHTML =
+            "";
+
+
+        sales.forEach(
+            sale => {
+
+                table.innerHTML += `
+                    <tr>
+
+                        <td>
+                            ${sale.id}
+                        </td>
+
+                        <td>
+                            ${sale.customer_name}
+                        </td>
+
+                        <td>
+                            ₹${sale.total_amount}
+                        </td>
+
+                        <td>
+                            ${sale.created_at}
+                        </td>
+
+                    </tr>
+                `;
+
+            }
+        );
+
+
+        createSalesChart(
+            sales
+        );
+
+
+        await updateQuickInsights();
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Sales error:",
+            error
+        );
+
+    }
+
+}
+
+
+// ======================================
+// SALES CHART
+// ======================================
+
+function createSalesChart(
+    sales
+) {
+
+    const chart =
+        document.getElementById(
+            "salesChart"
+        );
+
+
+    const labels =
+        document.getElementById(
+            "salesLabels"
+        );
+
+
+    chart.innerHTML =
+        "";
+
+
+    labels.innerHTML =
+        "";
+
+
+    if (sales.length === 0) {
+
+        chart.innerHTML =
+            "<p>No sales data available.</p>";
+
+        return;
+
+    }
+
+
+    const maxSales =
+        Math.max(
+            ...sales.map(
+                s => s.total_amount
+            ),
+            1
+        );
+
+
+    sales.forEach(
+        sale => {
+
+            const height =
+                Math.max(
+                    (
+                        sale.total_amount /
+                        maxSales
+                    ) * 100,
+                    12
+                );
+
+
+            chart.innerHTML += `
+                <div
+                    class="bar"
+                    style="
+                        height:${height}%;
+                    ">
+
+                    <span>
+                        ₹${sale.total_amount}
+                    </span>
+
+                </div>
+            `;
+
+
+            labels.innerHTML += `
+                <div>
+                    Bill ${sale.id}
+                </div>
+            `;
+
+        }
+    );
+
+}
+
+
+// ======================================
+// COPILOT
+// ======================================
+
+async function askCopilot() {
+
+    const question =
+        document
+            .getElementById("question")
+            .value
+            .trim();
+
+
+    if (!question) {
+
+        document.getElementById(
+            "answer"
+        ).textContent =
+            "Please enter a question.";
+
+        return;
+
+    }
+
+
+    const answerBox =
+        document.getElementById(
+            "answer"
+        );
+
+
+    answerBox.textContent =
+        "🤖 Refreshing retail data...";
+
+
+    try {
+
+        // ======================================
+        // REFRESH LATEST DATA
+        // ======================================
+
+        await loadDashboard();
+
+        await loadProducts();
+
+        await loadSales();
+
+
+        answerBox.textContent =
+            "🤖 RetailNova AI is analyzing the latest data...";
+
+
+        // ======================================
+        // GEMINI COPILOT
+        // ======================================
+
+        const response =
+            await fetch(
+                `${API}/copilot?_=${Date.now()}`,
+                {
+
+                    method: "POST",
+
+                    cache: "no-store",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Cache-Control":
+                            "no-cache"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        question:
+                            question
+
+                    })
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Backend returned ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (data.answer) {
+
+            answerBox.textContent =
+                data.answer;
+
+        }
+
+        else {
+
+            answerBox.textContent =
+                "⚠️ Copilot did not return an answer.";
+
+        }
+
+
+        console.log(
+            "RetailNova Copilot response:",
+            data
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Copilot error:",
+            error
+        );
+
+
+        answerBox.textContent =
+            "❌ Could not connect to the RetailNova AI backend.";
+
+    }
+
+}
+
+
+// ======================================
+// ENTER KEY FOR COPILOT
+// ======================================
+
+document
+    .getElementById("question")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                askCopilot();
+
+            }
+
+        }
+    );
+
+
+// ======================================
+// START APPLICATION
+// ======================================
+
+async function startApplication() {
+
+    await loadDashboard();
+
+    await loadStores();
+
+    await loadProducts();
+
+    await loadSales();
+
+    await updateQuickInsights();
+
+}
+
+
+startApplication();
+
+
+</script>
+
+
+</body>
+
+</html>
